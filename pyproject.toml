@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyclean"
+version = "0.1.0"
+description = "Tiny pyproject.toml-driven cleaner for Python projects."
+authors = [{ name = "Ed Armstrong" }]
+readme = "readme.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+# If your package code is in src/pyclean/
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+pyclean = "pyclean.cli:main"
