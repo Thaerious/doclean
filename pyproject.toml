@@ -1,22 +1,40 @@
 [build-system]
-requires = ["setuptools>=69", "wheel"]
+requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyclean"
 version = "0.1.0"
-description = "Tiny pyproject.toml-driven cleaner for Python projects."
-authors = [{ name = "Ed Armstrong" }]
-readme = "readme.md"
+description = "Minimal, safe, pyproject.toml-driven cleaning tool for Python projects."
+readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
+authors = [
+    { name = "Ed Armstrong" }
+]
 
-# If your package code is in src/pyclean/
+# No dependencies for the MVP
+dependencies = []
+
+# This creates the `pyclean` command
+[project.scripts]
+pyclean = "pyclean.cli:main"
+
+
+# Tell setuptools where your package lives
 [tool.setuptools]
 package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[project.scripts]
-pyclean = "pyclean.cli:main"
+
+# Example config block that users of pyclean will put in THEIR projects
+# This block is NOT used by pyclean's own build, but you can leave it
+[tool.pyclean]
+paths = [
+    "build",
+    "dist",
+    "**/__pycache__",
+    ".pytest_cache"
+]
