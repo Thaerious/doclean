@@ -25,12 +25,13 @@ Will delete:
 This script searches upward from the current directory until it finds
 a pyproject.toml, then applies the cleanup rules.
 """
-
+from importlib.metadata import version
 from pathlib import Path
 import shutil
 import tomllib
 import sys
 import glob
+import argparse
 
 def get_pyproject(root: Path | None = None) -> Path:
     """
@@ -235,6 +236,47 @@ def remove_paths(paths: list[Path]):
             except Exception as e:
                 print(f"⚠️  could not remove {path}: {e}")
 
+def show_paths(paths: list[Path]):
+    for path in paths:
+        if path.is_dir():
+            print(f"🗑️  removed dir:  {path}")
+        else:
+            try:
+                print(f"🗑️  removed file: {path}")
+            except Exception as e:
+                print(f"⚠️  could not remove {path}: {e}")
+
+def cli():
+    parser = argparse.ArgumentParser(
+        prog="pyclean",
+        description=(
+            "Remove build artifacts and temporary paths defined in the [tool.pyclean] "
+            "section of pyproject.toml."
+        ),
+    )
+
+    parser.add_argument(
+        "-v", "--version",
+        action  = "version",
+        version = f"pyclean {version('pyclean')}",
+        help    = "Show pyclean version and exit."
+    )
+
+    parser.add_argument(
+        "-d", "--dry",
+        action="store_true",
+        help="Show which paths would be removed, but don't delete anything.",
+    )
+
+    parser.add_argument(
+        "root",
+        nargs="?",
+        default=".",
+        help="Optional project root (defaults to current directory).",
+    )
+
+    return parser.parse_args()
+
 def main():
     """
     Main entry point for the cleaning tool.
@@ -259,11 +301,17 @@ def main():
     Notes:
         - Intended as the console_script entry point in pyproject.
     """
+    args = cli()
     pyroject_path = get_pyproject()
     patterns = get_clean_paths(pyroject_path)    
     as_paths = to_paths(pyroject_path.parent, patterns)
     validated = validate_paths(pyroject_path.parent, as_paths)
-    remove_paths(validated)
+
+    if not args.dry:        
+        remove_paths(validated)
+    else:
+        print("👀  Dry run, files not removed.")
+        show_paths(validated)
 
     print("✅ Cleanup complete.")
 
