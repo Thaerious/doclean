@@ -6,4 +6,6 @@ src/pyclean.egg-info/PKG-INFO
 src/pyclean.egg-info/SOURCES.txt
 src/pyclean.egg-info/dependency_links.txt
 src/pyclean.egg-info/entry_points.txt
+src/pyclean.egg-info/requires.txt
 src/pyclean.egg-info/top_level.txt
+tests/test_get_pyproject.py

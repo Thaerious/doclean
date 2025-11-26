@@ -33,7 +33,7 @@ import sys
 import glob
 import argparse
 
-def get_pyproject(root: Path | None = None) -> Path:
+def find_pyproject(root: Path | None = None) -> Path:
     """
     Locate the nearest `pyproject.toml` by searching upward from a starting
     directory.
@@ -43,6 +43,7 @@ def get_pyproject(root: Path | None = None) -> Path:
             Starting directory for the search.  
             - If `None`, the search begins from the current working directory.
             - Otherwise, the provided path is resolved before searching.
+            - Relative to the current working directory if not absolute.
 
     Returns:
         Path:
@@ -75,7 +76,7 @@ def get_pyproject(root: Path | None = None) -> Path:
         if fullpath.exists():            
             return fullpath
 
-    sys.exit("❌ pyproject.toml not found.")        
+    raise Exception("❌ pyproject.toml not found.")        
 
 
 def get_clean_paths(pyproject: Path) -> list[str]:
@@ -282,7 +283,7 @@ def main():
     Main entry point for the cleaning tool.
 
     Behavior:
-        1. Locate the nearest `pyproject.toml` using `get_pyproject()`.
+        1. Locate the nearest `pyproject.toml` using `find_pyproject()`.
         2. Load the cleaning patterns from `[tool.pyclean]` via `get_clean_paths()`.
         3. Convert each pattern into expanded filesystem paths with `to_paths()`.
         4. Validate those paths for safety using `validate_paths()`.
@@ -300,12 +301,16 @@ def main():
 
     Notes:
         - Intended as the console_script entry point in pyproject.
-    """
+    """    
     args = cli()
-    pyroject_path = get_pyproject()
-    patterns = get_clean_paths(pyroject_path)    
-    as_paths = to_paths(pyroject_path.parent, patterns)
-    validated = validate_paths(pyroject_path.parent, as_paths)
+
+    try:
+        pyroject_path = find_pyproject()
+        patterns = get_clean_paths(pyroject_path)    
+        as_paths = to_paths(pyroject_path.parent, patterns)
+        validated = validate_paths(pyroject_path.parent, as_paths)
+    except Exception as e:
+        sys.exit(e.message)
 
     if not args.dry:        
         remove_paths(validated)

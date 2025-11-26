@@ -13,13 +13,18 @@ authors = [
     { name = "Ed Armstrong" }
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+]
+
 # No dependencies for the MVP
 dependencies = []
 
 # This creates the `pyclean` command
 [project.scripts]
 pyclean = "pyclean.cli:main"
-
 
 # Tell setuptools where your package lives
 [tool.setuptools]
@@ -28,9 +33,13 @@ package-dir = { "" = "src" }
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = ["-v", "-x", "-s"]
 
 # Example config block that users of pyclean will put in THEIR projects
-# This block is NOT used by pyclean's own build, but you can leave it
+# This block is NOT used by pyclean's own build
 [tool.pyclean]
 paths = [
     "build",

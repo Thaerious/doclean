@@ -11,10 +11,7 @@ pyclean aims to be:
 * Config-driven — controlled entirely via pyproject.toml
 * Predictable — does exactly what you configure, no more
 
----
-
 ## ⭐ Features
-
 - Reads cleanup patterns from `[tool.pyclean]` in `pyproject.toml`
 - Supports:
   - Wildcards (`*`)
@@ -34,7 +31,7 @@ pyclean aims to be:
 ## 📦 Installation (development)
 
 ```bash
-pip install -e .
+pip install -e .[dev]
 ```
 
 ## Details
