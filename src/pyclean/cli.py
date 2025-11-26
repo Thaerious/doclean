@@ -194,9 +194,9 @@ def validate_paths(root: Path, paths: list[Path]) -> list[Path]:
         if path.is_symlink():
             print(f"⚠️ Refusing to delete symlinked path: {path}")
             continue
-            
+
         path = path.resolve()
-        print("Path:", path)
+
         if path == root:
             print(f"⚠️ Refusing to delete root project directory: {path}")
         elif not path.is_relative_to(root):
@@ -244,7 +244,7 @@ def remove_paths(paths: list[Path]):
                 path.unlink()
                 print(f"🗑️  removed file: {path}")
             except Exception as e:
-                print(f"⚠️  could not remove {path}: {e}")
+                pass # ignore unlink errors silently
 
 def show_paths(paths: list[Path]):
     for path in paths:
