@@ -1,20 +1,6 @@
 from pyclean.cli import to_paths
-from pathlib import Path
+from .FS_Helper import helper
 import pytest
-
-class Helper:
-    def __init__(self, root: Path):
-        self.root = root
-
-    def make(self, relative_path: str, contents: str = ""):
-        path = self.root / relative_path
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(contents)
-        return path
-
-@pytest.fixture
-def helper(tmp_path):
-    return Helper(tmp_path)
 
 def test_to_paths_simple_files(helper):
     helper.make("src/a.txt", "foo")

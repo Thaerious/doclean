@@ -191,7 +191,12 @@ def validate_paths(root: Path, paths: list[Path]) -> list[Path]:
     root = root.resolve()
     
     for path in paths:
+        if path.is_symlink():
+            print(f"⚠️ Refusing to delete symlinked path: {path}")
+            continue
+            
         path = path.resolve()
+        print("Path:", path)
         if path == root:
             print(f"⚠️ Refusing to delete root project directory: {path}")
         elif not path.is_relative_to(root):
