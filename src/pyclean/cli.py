@@ -115,11 +115,15 @@ def get_globs(pyproject: Path) -> list[str]:
         raise Exception("❌ No [tool.pyclean] section found in pyproject.toml.")
 
     # Read the 'paths' values
-    paths = section.get("paths")
-    if not paths:
+    globs = section.get("paths")
+    if not globs:
         raise Exception("❌ No 'paths' list found in [tool.pyclean].")
 
-    return paths
+    # Ensure it's a list
+    if not isinstance(globs, list):
+        raise Exception("❌ 'paths' must be a list in [tool.pyclean]")
+
+    return globs
 
 
 def to_paths(root: Path, patterns: list[str]) -> list[Path]:
