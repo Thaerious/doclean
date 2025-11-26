@@ -79,7 +79,7 @@ def find_pyproject(root: Path | None = None) -> Path:
     raise Exception("❌ pyproject.toml not found.")        
 
 
-def get_clean_paths(pyproject: Path) -> list[str]:
+def get_globs(pyproject: Path) -> list[str]:
     """
     Load the cleaning path list from a project's pyproject.toml.
 
@@ -107,17 +107,17 @@ def get_clean_paths(pyproject: Path) -> list[str]:
     # Navigate to the 'tool' section
     tool = data.get("tool")
     if not tool:
-        sys.exit("❌ No [tool] section found in pyproject.toml.")
+        raise Exception("❌ No [tool] section found in pyproject.toml.")
 
     # Navigate to the 'tool.pyclean' section
     section = tool.get("pyclean")
     if not section:
-        sys.exit("❌ No [tool.pyclean] section found in pyproject.toml.")
+        raise Exception("❌ No [tool.pyclean] section found in pyproject.toml.")
 
     # Read the 'paths' values
     paths = section.get("paths")
     if not paths:
-        sys.exit("❌ No 'paths' list found in [tool.pyclean].")
+        raise Exception("❌ No 'paths' list found in [tool.pyclean].")
 
     return paths
 
@@ -284,7 +284,7 @@ def main():
 
     Behavior:
         1. Locate the nearest `pyproject.toml` using `find_pyproject()`.
-        2. Load the cleaning patterns from `[tool.pyclean]` via `get_clean_paths()`.
+        2. Load the cleaning patterns from `[tool.pyclean]` via `get_globs()`.
         3. Convert each pattern into expanded filesystem paths with `to_paths()`.
         4. Validate those paths for safety using `validate_paths()`.
         5. Remove all validated paths using `remove_paths()`.
@@ -306,7 +306,7 @@ def main():
 
     try:
         pyroject_path = find_pyproject()
-        patterns = get_clean_paths(pyroject_path)    
+        patterns = get_globs(pyroject_path)    
         as_paths = to_paths(pyroject_path.parent, patterns)
         validated = validate_paths(pyroject_path.parent, as_paths)
     except Exception as e:
