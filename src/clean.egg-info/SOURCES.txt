@@ -1,9 +1,0 @@
-pyproject.toml
-readme.md
-src/clean/__init__.py
-src/clean/cli.py
-src/clean.egg-info/PKG-INFO
-src/clean.egg-info/SOURCES.txt
-src/clean.egg-info/dependency_links.txt
-src/clean.egg-info/entry_points.txt
-src/clean.egg-info/top_level.txt
