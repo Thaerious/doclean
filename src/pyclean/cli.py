@@ -89,13 +89,13 @@ def get_globs(pyproject: Path) -> list[str]:
 
     Returns:
         list[str]: 
-            A list of path strings defined under the `[tool.pyclean]` section.
+            A list of path strings defined under the `[tool.doclean]` section.
 
     Exit conditions:
         ❌ Exits with an error message if:
             - The file lacks a top-level `[tool]` section.
-            - The file lacks a `[tool.pyclean]` section.
-            - The `[tool.pyclean]` section does not define a `paths` list.
+            - The file lacks a `[tool.doclean]` section.
+            - The `[tool.doclean]` section does not define a `paths` list.
 
     Notes:
         The function does not validate path existence or glob patterns; it only
@@ -109,19 +109,19 @@ def get_globs(pyproject: Path) -> list[str]:
     if not tool:
         raise Exception("❌ No [tool] section found in pyproject.toml.")
 
-    # Navigate to the 'tool.pyclean' section
-    section = tool.get("pyclean")
+    # Navigate to the 'tool.doclean' section
+    section = tool.get("doclean")
     if not section:
-        raise Exception("❌ No [tool.pyclean] section found in pyproject.toml.")
+        raise Exception("❌ No [tool.doclean] section found in pyproject.toml.")
 
     # Read the 'paths' values
     globs = section.get("paths")
     if not globs:
-        raise Exception("❌ No 'paths' list found in [tool.pyclean].")
+        raise Exception("❌ No 'paths' list found in [tool.doclean].")
 
     # Ensure it's a list
     if not isinstance(globs, list):
-        raise Exception("❌ 'paths' must be a list in [tool.pyclean]")
+        raise Exception("❌ 'paths' must be a list in [tool.doclean]")
 
     return globs
 
@@ -258,9 +258,9 @@ def show_paths(paths: list[Path]):
 
 def cli():
     parser = argparse.ArgumentParser(
-        prog="pyclean",
+        prog="doclean",
         description=(
-            "Remove build artifacts and temporary paths defined in the [tool.pyclean] "
+            "Remove build artifacts and temporary paths defined in the [tool.doclean] "
             "section of pyproject.toml."
         ),
     )
@@ -268,8 +268,8 @@ def cli():
     parser.add_argument(
         "-v", "--version",
         action  = "version",
-        version = f"pyclean {version('pyclean')}",
-        help    = "Show pyclean version and exit."
+        version = f"doclean {version('doclean')}",
+        help    = "Show doclean version and exit."
     )
 
     parser.add_argument(
@@ -293,7 +293,7 @@ def main():
 
     Behavior:
         1. Locate the nearest `pyproject.toml` using `find_pyproject()`.
-        2. Load the cleaning patterns from `[tool.pyclean]` via `get_globs()`.
+        2. Load the cleaning patterns from `[tool.doclean]` via `get_globs()`.
         3. Convert each pattern into expanded filesystem paths with `to_paths()`.
         4. Validate those paths for safety using `validate_paths()`.
         5. Remove all validated paths using `remove_paths()`.
@@ -305,7 +305,7 @@ def main():
 
     Exit conditions:
         - Any fatal configuration problems (e.g., missing pyproject.toml,
-          missing [tool.pyclean], missing paths list) cause earlier helper
+          missing [tool.doclean], missing paths list) cause earlier helper
           functions to invoke `sys.exit()`.
 
     Notes:

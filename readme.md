@@ -1,18 +1,18 @@
-# pyclean — Minimal Project Cleaner for Python Projects
+# doclean — Minimal Project Cleaner for Python Projects
 
-`pyclean` is a tiny command-line tool that removes build artifacts, cache folders, and other temporary files based on patterns you define in your project’s `pyproject.toml`.
+`doclean` is a tiny command-line tool that removes build artifacts, cache folders, and other temporary files based on patterns you define in your project’s `pyproject.toml`.
 
 It is designed to be **simple**, **safe**, and **predictable**, following familar configuration style used by common tools.
 
 ## Why Another Clean Tool?
-pyclean aims to be:
+doclean aims to be:
 * Minimal — no frameworks, no plugins
 * Safe — prevents destructive deletions
 * Config-driven — controlled entirely via pyproject.toml
 * Predictable — does exactly what you configure, no more
 
 ## ⭐ Features
-- Reads cleanup patterns from `[tool.pyclean]` in `pyproject.toml`
+- Reads cleanup patterns from `[tool.doclean]` in `pyproject.toml`
 - Supports:
   - Wildcards (`*`)
   - Recursive globs (`**/pattern`)
@@ -37,7 +37,7 @@ pip install -e .[dev]
 ## Details
 
 ### Safety Rules
-Before deleting anything, pyclean validates each expanded path:
+Before deleting anything, doclean validates each expanded path:
 * Never deletes the project root
 * Rejects paths outside the project directory
 * Rejects symlinks
@@ -46,7 +46,7 @@ Before deleting anything, pyclean validates each expanded path:
 
 ### Example pyproject.toml
 ```bash
-[tool.pyclean]
+[tool.doclean]
 paths = [
     "build",
     "dist",
