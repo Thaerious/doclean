@@ -28,6 +28,11 @@ doclean aims to be:
 
 ---
 
+## 📦 Installation
+```bash
+pip install git+https://github.com/thaerious/doclean.git
+```
+
 ## 📦 Installation (development)
 
 ```bash

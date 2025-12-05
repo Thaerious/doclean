@@ -32,6 +32,7 @@ import tomllib
 import sys
 import glob
 import argparse
+from .DoCleanException import DoCleanException
 
 def find_pyproject(root: Path | None = None) -> Path:
     """
@@ -76,7 +77,7 @@ def find_pyproject(root: Path | None = None) -> Path:
         if fullpath.exists():            
             return fullpath
 
-    raise Exception("❌ pyproject.toml not found.")        
+    raise DoCleanException("❌ pyproject.toml not found.")        
 
 
 def get_globs(pyproject: Path) -> list[str]:
@@ -107,21 +108,21 @@ def get_globs(pyproject: Path) -> list[str]:
     # Navigate to the 'tool' section
     tool = data.get("tool")
     if not tool:
-        raise Exception("❌ No [tool] section found in pyproject.toml.")
+        raise DoCleanException("❌ No [tool] section found in pyproject.toml.")
 
     # Navigate to the 'tool.doclean' section
     section = tool.get("doclean")
     if not section:
-        raise Exception("❌ No [tool.doclean] section found in pyproject.toml.")
+        raise DoCleanException("❌ No [tool.doclean] section found in pyproject.toml.")
 
     # Read the 'paths' values
     globs = section.get("paths")
     if not globs:
-        raise Exception("❌ No 'paths' list found in [tool.doclean].")
+        raise DoCleanException("❌ No 'paths' list found in [tool.doclean].")
 
     # Ensure it's a list
     if not isinstance(globs, list):
-        raise Exception("❌ 'paths' must be a list in [tool.doclean]")
+        raise DoCleanException("❌ 'paths' must be a list in [tool.doclean]")
 
     return globs
 
@@ -318,8 +319,10 @@ def main():
         patterns = get_globs(pyroject_path)    
         as_paths = to_paths(pyroject_path.parent, patterns)
         validated = validate_paths(pyroject_path.parent, as_paths)
-    except Exception as e:
-        sys.exit(e.message)
+    except DoCleanException as e:
+        sys.exit(str(e))
+    except Exception as e:        
+        sys.exit(str(e))        
 
     if not args.dry:        
         remove_paths(validated)
