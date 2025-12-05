@@ -14,7 +14,7 @@ def build_pyproject(root, monkeypatch):
     link.symlink_to(project_root, target_is_directory=True)
 
     pyproject_path.write_text('''
-        [tool.pyclean]
+        [tool.doclean]
         paths = [
             "build",
             "dist",

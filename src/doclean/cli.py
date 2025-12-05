@@ -327,7 +327,7 @@ def main():
         print("👀  Dry run, files not removed.")
         show_paths(validated)
 
-    print("✅ Cleanup complete.")
+    print("✅  Cleanup complete.")
 
 if __name__ == "__main__":
     main()

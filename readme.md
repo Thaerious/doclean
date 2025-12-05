@@ -31,6 +31,9 @@ doclean aims to be:
 ## 📦 Installation (development)
 
 ```bash
+git clone git@github.com:Thaerious/doclean.git
+python3 -m venv venv
+source venv/bin/activate
 pip install -e .[dev]
 ```
 
@@ -40,7 +43,6 @@ pip install -e .[dev]
 Before deleting anything, doclean validates each expanded path:
 * Never deletes the project root
 * Rejects paths outside the project directory
-* Rejects symlinks
 * Skips missing paths
 * Only validated, safe paths are removed.
 
