@@ -1,6 +1,18 @@
+<p>
+  <a href="https://pypi.org/project/doclean/">
+    <img alt="PyPI" src="https://img.shields.io/pypi/v/doclean">
+  </a>
+  <a href="https://pypi.org/project/doclean/">
+    <img alt="Python Versions" src="https://img.shields.io/pypi/pyversions/doclean">
+  </a>
+  <a href="https://github.com/Thaerious/doclean/blob/main/license">
+    <img alt="License" src="https://img.shields.io/pypi/l/doclean">
+  </a>
+</p>
+
 # doclean — Minimal Project Cleaner for Python Projects
 
-`doclean` is a tiny command-line tool that removes build artifacts, cache folders, and other temporary files based on patterns you define in your project’s `pyproject.toml`.
+The `doclean` package is a tiny command-line tool that removes build artifacts, cache folders, and other temporary files based on patterns you define in your project’s `pyproject.toml`.
 
 It is designed to be **simple**, **safe**, and **predictable**, following familar configuration style used by common tools.
 
@@ -20,7 +32,6 @@ doclean aims to be:
 - Safety checks:
   - Prevents deleting project root
   - Refuses paths outside the project directory
-  - Rejects symlinks
   - Skips missing paths
 - Searches **upward** to find the nearest `pyproject.toml`
 - Optional `--dry` mode to preview deletions
@@ -29,6 +40,13 @@ doclean aims to be:
 ---
 
 ## 📦 Installation
+
+```bash
+pip install doclean
+```
+
+or
+
 ```bash
 pip install git+https://github.com/thaerious/doclean.git
 ```

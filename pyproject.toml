@@ -4,14 +4,25 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "doclean"
-version = "0.1.0"
+version = "0.1.2"
 description = "Minimal, safe, pyproject.toml-driven cleaning tool for Python projects."
-readme = "README.md"
+readme = "readme.md"
 requires-python = ">=3.11"
-license = { text = "MIT" }
-authors = [
-    { name = "Ed Armstrong" }
+license = "MIT"
+license-files = ["license"]
+authors = [{ name = "Ed Armstrong" }]
+classifiers = [
+"Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.13",  
+    "Operating System :: OS Independent",
 ]
+
+[project.urls]
+Homepage = "https://github.com/Thaerious/doclean"
 
 [project.optional-dependencies]
 dev = [
@@ -29,6 +40,7 @@ doclean = "doclean.cli:main"
 # Tell setuptools where your package lives
 [tool.setuptools]
 package-dir = { "" = "src" }
+include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["src"]
