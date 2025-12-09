@@ -331,6 +331,7 @@ def main():
         show_paths(validated)
 
     print("✅  Cleanup complete.")
+    
 
 if __name__ == "__main__":
     main()
