@@ -1,4 +1,4 @@
-from pyclean.cli import remove_paths
+from doclean.cli import remove_paths
 from .FS_Helper import helper
 from pathlib import Path
 import pytest

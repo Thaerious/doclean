@@ -1,4 +1,4 @@
-from pyclean.cli import validate_paths
+from doclean.cli import validate_paths
 from .FS_Helper import helper
 from pathlib import Path
 import pytest

@@ -1,5 +1,5 @@
 
-from pyclean.cli import find_pyproject
+from doclean.cli import find_pyproject
 from pathlib import Path
 from .build_pyproject import build_pyproject
 import pytest

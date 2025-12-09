@@ -1,4 +1,4 @@
-from pyclean.cli import to_paths
+from doclean.cli import to_paths
 from .FS_Helper import helper
 import pytest
 
